@@ -1,0 +1,37 @@
+node 1 : x:128 , y:128
+node 2 : x:128 , y:128
+node 3 : x:128 , y:128
+node 4 : x:128 , y:128
+node 5 : x:128 , y:128
+node 6 : x:128 , y:128
+node 7 : x:128 , y:128
+node 8 : x:128 , y:128
+node 9 : x:128 , y:128
+node 10 : x:128 , y:128
+node 11 : x:128 , y:128
+
+---
+
+1 rel 2
+2 rel 3
+3 rel 4
+4 rel 1
+
+1 rel 5
+2 rel 5
+3 rel 5
+4 rel 5
+
+11 rel 6
+11 rel 7
+11 rel 8
+11 rel 9
+11 rel 10
+
+6 rel 7
+7 rel 8
+8 rel 9
+9 rel 10
+10 rel 11
+10 rel 6
+

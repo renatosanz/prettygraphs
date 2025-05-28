@@ -1,0 +1,33 @@
+node 1 : x:100 , y:100
+node 2 : x:100 , y:120
+node 3 : x:100 , y:140
+node 4 : x:100 , y:160
+node 5 : x:100 , y:180
+node 6 : x:100 , y:200
+
+node 7 : x:120 , y:100
+node 8 : x:120 , y:120
+node 9 : x:120 , y:140
+node 10 : x:120 , y:160
+node 11 : x:120 , y:180
+node 12 : x:120 , y:200
+
+---
+1 rel 2
+2 rel 3
+3 rel 4
+4 rel 5
+5 rel 6
+
+1 rel 7
+2 rel 8
+3 rel 9
+4 rel 10
+5 rel 11
+
+7 rel 8 
+8 rel 9
+9 rel 10
+10 rel 11
+11 rel 12
+6 rel 12

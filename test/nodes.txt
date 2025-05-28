@@ -1,0 +1,24 @@
+node 1 : x:128 , y:128
+node 2 : x:100 , y:198
+node 3 : x:128 , y:208
+node 4 : x:128 , y:128
+node 5 : x:128 , y:30
+node 6 : x:128 , y:18
+node 7 : x:100 , y:100
+
+---
+
+1 rel 2
+2 rel 3
+3 rel 4
+4 rel 5
+5 rel 6
+6 rel 1
+
+7 rel 1
+7 rel 2
+7 rel 3
+7 rel 4
+7 rel 5
+7 rel 6
+
