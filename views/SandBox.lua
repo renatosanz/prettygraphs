@@ -1,7 +1,8 @@
 SandBox = class:class_new(object)
 function SandBox:new(args)
 	self:object("SandBox", args)
-	self.nodes = self:ChargeNodes("./test/nodes3.txt")
+	-- pls read the documentation on my blog: https://riprtx.netlify.app/blogs/simulated_annealing_love2d/
+	self.nodes = self:ChargeNodes("./test/nodes.txt")
 	an:input_bind("toggle_menu", { "key:tab" })
 	an:input_bind("quit", { "key:q" })
 
