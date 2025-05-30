@@ -41,43 +41,46 @@ function Simulator:new(Ti, Cof, mI, nodes)
 	maxI = mI
 	Cf = Cof
 
-	--ciclo iterativo cada 0.01s
-	self:timer_every(0.01, function()
-		if temperature > 1e-10 or i < maxI then
-			local newState = GenerateNeighbor(actualState)
-			local newEnergyState = CalculateEnergyState(newState, self.graph)
+	-- main iterative loop (core of the simulation)
+	self:timer_after(5, function()
+		self:timer_every(0.01, function()
+			if temperature > 1e-10 or i < maxI then
+				local newState = GenerateNeighbor(actualState)
+				local newEnergyState = CalculateEnergyState(newState, self.graph)
 
-			if newEnergyState < actualEnergyState then
-				actualState = newState
-				actualEnergyState = newEnergyState
-
-				if newEnergyState < bestEnergyState then
-					bestState = newState
-					bestEnergyState = newEnergyState
-				end
-			else
-				local prob = math.exp((actualEnergyState - newEnergyState) / temperature)
-				if love.math.random() < prob then
+				if newEnergyState < actualEnergyState then
 					actualState = newState
 					actualEnergyState = newEnergyState
+
+					if newEnergyState < bestEnergyState then
+						bestState = newState
+						bestEnergyState = newEnergyState
+					end
+				else
+					local prob = math.exp((actualEnergyState - newEnergyState) / temperature)
+					if love.math.random() < prob then
+						actualState = newState
+						actualEnergyState = newEnergyState
+					end
 				end
-			end
 
-			for i, nodo in ipairs(nodes) do
-				nodo.body:setLinearVelocity(0, 0)
-				nodo.body:setLinearVelocity(bestState[i].x - nodes[i].x, bestState[i].y - nodes[i].y)
-			end
+				for i, nodo in ipairs(nodes) do
+					nodo.body:setLinearVelocity(0, 0)
+					nodo.body:setLinearVelocity(bestState[i].x - nodes[i].x, bestState[i].y - nodes[i].y)
+				end
 
-			-- reducir la temperatura
-			temperature = temperature * Cf
-			i = i + 1
-		else
-			self:timer_cancel("execute_simulation")
-		end
-	end, nil, nil, function() end, "execute_simulation")
+				-- reduce temperature
+				temperature = temperature * Cf
+				i = i + 1
+			else
+				self:timer_cancel("execute_simulation") -- cancel the loop
+			end
+		end, nil, nil, function() end, "execute_simulation")
+	end)
 end
 
 function Simulator:update(dt)
+	-- display some metrics
 	front:draw_text_lt("iterations: " .. i .. "/" .. maxI, inter_font, 5, 5, 0, 1, 1, 1, 1, an.colors.blue[0])
 	front:draw_text_lt("energy: " .. actualEnergyState, inter_font, 5, 15, 0, 1, 1, 1, 1, an.colors.orange[0])
 	front:draw_text_lt("temperature: " .. temperature, inter_font, 5, 25, 0, 1, 1, 1, 1, an.colors.yellow[0])
@@ -103,7 +106,7 @@ function CalculateEnergyState(nodes, graph)
 		node_dist = 1,
 		edges = 1,
 		intersections = 1,
-		angles = 0,
+		angles = 0, -- this param is under experiemtal dev and might cause bugs
 		edge_length = 1,
 	}
 
